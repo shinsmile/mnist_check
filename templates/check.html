@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MNIST Test</title>
+  <style type = "text/css">
+  .button {
+    font-size: 20px;
+    padding: 10px 30px;
+  }
+  div.result {
+    font-size: 50px;
+  }
+  </style>
+</head>
+<body>
+<H1> MNIST Check </H1>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/draw.js"></script>
+<script type="text/javascript" src="../static/js/model.js"></script>
+<script type="text/javascript" src="../static/js/judge.js"></script>
+<canvas id='canvas' width=448 height=448  style="background-color:black;"></canvas>
+<canvas id='canvas2' width=448 height=448  style="background-color:black;"></canvas>
+<div>
+  <button type="button" onclick="check()" id ="checkButton" class="button">Check</button>
+  <button type="button" onclick="allClear()" class="button">Clear</button>
+</div>
+<h1 class="text-center" id="hello">値は...</h1>
+</body>
+</html>
