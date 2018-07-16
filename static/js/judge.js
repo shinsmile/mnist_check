@@ -1,16 +1,6 @@
 window.onload = function(){
   drawSetup($('canvas'),$('canvas2'));
 }
-var model;
-function onFileSelect(e) { var f = e.target.files;
-  var reader = new FileReader();
-  reader.onload = function(filename){
-    var fs = new Float32Stream(reader.result);
-    model = new Model(fs);
-    $('checkButton').disabled = "";
-  }
-  reader.readAsArrayBuffer(f[0]);
-}
 function check(){
   var Data = getX($('canvas'));
   var xData = JSON.stringify({"x":Data});
