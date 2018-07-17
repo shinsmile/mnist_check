@@ -27,10 +27,10 @@ class TwoLayerNet:
         return y
 
     # x:入力データ, t:教師データ
-    def loss(self, x, t):
-        y = self.predict(x)
+    # def loss(self, x, t):
+    #     y = self.predict(x)
 
-        return cross_entropy_error(y, t)
+    #     return cross_entropy_error(y, t)
 
     def accuracy(self, x, t):
         y = self.predict(x)
@@ -40,17 +40,6 @@ class TwoLayerNet:
         return accuracy
 
     # x:入力データ, t:教師データ
-    def numerical_gradient(self, x, t):
-        loss_W = lambda W: self.loss(x, t)
-
-        grads = {}
-        grads['W1'] = numerical_gradient(loss_W, self.params['W1'])
-        grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
-        grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
-        grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
-
-        return grads
-
     def gradient(self, x, t):
         W1, W2 = self.params['W1'], self.params['W2']
         b1, b2 = self.params['b1'], self.params['b2']

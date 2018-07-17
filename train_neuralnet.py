@@ -28,11 +28,10 @@ def learn_and_judge():
     network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
     iters_num = 10000  # 繰り返しの回数を適宜設定する
-    train_size = x_train.shape[0]
+    train_size = x_train.shape[0]#60000
     batch_size = 100
     learning_rate = 0.1
 
-    train_loss_list = []
     train_acc_list = []
     test_acc_list = []
 
@@ -44,15 +43,11 @@ def learn_and_judge():
         t_batch = t_train[batch_mask]
 
         # 勾配の計算
-        #grad = network.numerical_gradient(x_batch, t_batch)
         grad = network.gradient(x_batch, t_batch)
 
         # パラメータの更新
         for key in ('W1', 'b1', 'W2', 'b2'):
             network.params[key] -= learning_rate * grad[key]
-
-        loss = network.loss(x_batch, t_batch)
-        train_loss_list.append(loss)
 
         if i % iter_per_epoch == 0:
             train_acc = network.accuracy(x_train, t_train)
