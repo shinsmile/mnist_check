@@ -7,6 +7,7 @@ from neural_net.gradient import numerical_gradient
 
 class TwoLayerNet:
 
+    # 初期化を行う
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
         # 重みの初期化
         self.params = {}
@@ -15,6 +16,7 @@ class TwoLayerNet:
         self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
         self.params['b2'] = np.zeros(output_size)
 
+    # 認識（推論）を行う
     def predict(self, x):
         W1, W2 = self.params['W1'], self.params['W2']
         b1, b2 = self.params['b1'], self.params['b2']
@@ -27,11 +29,6 @@ class TwoLayerNet:
         return y
 
     # x:入力データ, t:教師データ
-    # def loss(self, x, t):
-    #     y = self.predict(x)
-
-    #     return cross_entropy_error(y, t)
-
     def accuracy(self, x, t):
         y = self.predict(x)
         y = np.argmax(y, axis=1)
@@ -39,6 +36,7 @@ class TwoLayerNet:
         accuracy = np.sum(y == t) / float(x.shape[0])
         return accuracy
 
+    # 重みパラメータに対する勾配を求める
     # x:入力データ, t:教師データ
     def gradient(self, x, t):
         W1, W2 = self.params['W1'], self.params['W2']
