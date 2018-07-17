@@ -19,16 +19,18 @@ def index():
 
 @app.route('/postText', methods=['POST'])
 def learn_and_judge():
+    # Ajaxで手入力データを受信
     text = request.json['x']
     data = list(text.values())
 
-    # データの読み込み
+    # Mnistデータの読み込み
     (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
-
+    # ニューラルネットワークの生成
     network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
-    iters_num = 10000  # 繰り返しの回数を適宜設定する
-    train_size = x_train.shape[0]#60000
+    # ハイパーパラメーターの設定
+    iters_num = 10000 # 繰り返しの回数を適宜設定する
+    train_size = x_train.shape[0] #60000
     batch_size = 100
     learning_rate = 0.1
 
@@ -38,6 +40,7 @@ def learn_and_judge():
     iter_per_epoch = max(train_size / batch_size, 1)
 
     for i in range(iters_num):
+        # ミニバッチの取得
         batch_mask = np.random.choice(train_size, batch_size)
         x_batch = x_train[batch_mask]
         t_batch = t_train[batch_mask]
@@ -48,7 +51,7 @@ def learn_and_judge():
         # パラメータの更新
         for key in ('W1', 'b1', 'W2', 'b2'):
             network.params[key] -= learning_rate * grad[key]
-
+        # 1エポックごとに認識精度を計算
         if i % iter_per_epoch == 0:
             train_acc = network.accuracy(x_train, t_train)
             test_acc = network.accuracy(x_test, t_test)
@@ -56,9 +59,12 @@ def learn_and_judge():
             test_acc_list.append(test_acc)
             print("train acc, test acc | " + str(train_acc) + ", " + str(test_acc))
 
+    # 手入力したデータをもとに予測
     y = TwoLayerNet.predict(network, data)
+    # 最も可能性の高い選択肢を抽出
     x = np.argmax(y)
     print(x)
+    # Ajaxするため文字列に変換
     result = str(x)
 
     return_data = {"result":result}
